@@ -1,0 +1,12 @@
+{  "colours": [
+    {"input": "red", "out": "#dc143c"},
+    {"input": "blue", "out": "#4169e1"},
+    {"input": "green", "out": "#6b8e23"},
+    {"input": "yellow", "out": "#ffd700"},
+    {"input": "orange", "out": "#ff8c00"},
+    {"input": "purple", "out": "#ba55d3"},
+    {"input": "brown", "out": "#a6692b"},
+    {"input": "black", "out": "#505050"},
+    {"input": "grey", "out": "#778899"}
+  ]
+}

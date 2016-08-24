@@ -1,0 +1,270 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Games on graphs visualisation system
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/app.css')
+    script(src='/javascripts/jquery-2.2.3.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/d3-queue.v2.min.js')
+    script(src='/javascripts/d3.v3.min.js')
+    script(src='/javascripts/download2.js')
+    style.
+      #navbar navbar-default {pointer-events: unset;}
+  body
+    nav#nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Games on graphs
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            // reload
+            li
+              a(href='#', onclick='game.clear_playground(); reload();') Reload
+            // clear dropdown
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
+                | Clear
+                span.caret
+              ul.dropdown-menu(role='menu')
+                li
+                  a(href='#', onclick='game.clear_playground()') Clear playground
+                li
+                  a(href='#', onclick='clearCoalition()') Empty coalition selection
+            // download dropdown
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
+                | Download
+                span.caret
+              ul.dropdown-menu(role='menu')
+                li
+                  a(href='#', onclick='io.download_graph();') Download graph as .json
+                li
+                  a(href='#', onclick='io.download_game()') Download game as .json
+                li
+                  a(href='#', onclick='io.download_log()') Download console log
+            // upload dropdown
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
+                | Upload
+                span.caret
+              ul.dropdown-menu(role='menu')
+                li
+                  a(href='#', data-toggle='modal', data-target='#upGraphModal') Upload directed graph as .json
+                li
+                  a(href='#', data-toggle='modal', data-target='#upGameModal') Upload game as .json
+            // display settings
+            li
+              a(href='#', data-toggle='modal', data-target='#displayModal') Display settings
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='#', data-toggle='modal', data-target='#helpModal') Help
+          ul.nav.navbar-nav.navbar-right
+
+    #helpModal.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4.modal-title Help
+          .modal-body
+            table.table.table-striped.table-hover
+              thead
+                tr
+                  th Key/Action
+                  th Event
+              tbody
+                tr
+                  td U
+                  td Toggle directed/undirected edge mode
+                tr
+                  td C
+                  td Add/remove selected node to coalition selection
+                tr
+                  td Backspace
+                  td Remove selected node or edge
+                tr
+                  td ctrl + drag
+                  td Move node and fix in position
+                tr
+                  td Doubleclick fixed node
+                  td Unfix node
+          .modal-footer
+            button.btn.btn-primary(type='button', data-dismiss='modal') Close
+    // display settings modal
+    #displayModal.modal.fade(role='dialog')
+      .modal-dialog
+        // Modal content
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Change display settings
+          .modal-body
+            form#display-modal-form.form-horizontal(method='post')
+              fieldset
+                .form-group
+                  label.col-lg-4.control-label(for='select') Playground width
+                  .col-lg-5
+                    input#modal-width.form-control(type='text', name='width', placeholder='800')
+                  label.col-lg-4.control-label(for='select') Playground height
+                  .col-lg-5
+                    input#modal-height.form-control(type='text', name='height', placeholder='600')
+                  label.col-lg-4.control-label(for='select') Node spread
+                  .col-lg-5
+                    input#modal-spread.form-control(type='text', name='spread', placeholder='150')
+                .form-group
+                  .col-lg-10.col-lg-offset-2
+                    button.btn.btn-default(type='reset', data-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='submit', data-dismiss='modal', onclick='set_display()') Submit
+          .modal-footer
+    // upload graph modal
+    #upGraphModal.modal.fade(role='dialog')
+      .modal-dialog
+        // Modal content
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Upload graph as .json
+          .modal-body
+            form#uploadGraph(enctype='multipart/form-data', method='post', action='/graph', onsubmit='io.upload_graph();')
+              input(type='file', name='graph')
+              input(type='submit')
+              | Submit
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Close
+    // upload game modal
+    #upGameModal.modal.fade(role='dialog')
+      .modal-dialog
+        // Modal content
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Upload game as .json
+          .modal-body
+            form#uploadGame(enctype='multipart/form-data', method='post', action='/game', onsubmit='io.upload_game();')
+              input(type='file', name='game')
+              input(type='submit')
+              | Submit
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Close
+    .container
+      // heading
+      h3 Playground
+      // left column
+      .col-md-6
+        // top half of left column (panels)
+        .row
+          // overview panel (blue)
+          .col-md-4
+            h5 Overview
+            table.table.table-striped.table-hover
+              tbody
+                tr.info
+                  td
+                    em Total nodes
+                  td#total-nodes
+                tr.info
+                  td
+                    em Total edges
+                  td#total-edges
+                tr.info
+                  td
+                    em Social welfare
+                  td#social-welfare
+          // selected node panel (green)
+          .col-md-4
+            h5 Selected node
+            table.table.table-striped.table-hover
+              tbody
+                tr.success
+                  td
+                    em Node
+                  td#sel-node
+                tr.success
+                  td
+                    em Strategy
+                  td#sel-strat
+                tr.success
+                  td
+                    em Payoff
+                  td#sel-pay
+          // coalition panel (red)
+          .col-md-4
+            h5 Coalition
+            table.table.table-striped.table-hover
+              tbody
+                tr.danger
+                  td
+                    em Size
+                  td#coal-size
+                tr.danger
+                  td
+                    em Nodes
+                  td#coal-nodes
+                tr.danger
+                  td
+                    em Payoff
+                  td#coal-pay
+        // end of top half of left column
+        // bottom half of left column (strategy selection)
+        .row
+          .col-md-12
+            .well.well-sm
+              ul#select-strategy.breadcrumb
+                ul.select-status
+                  a#select-status-node.btn.btn-warning.btn-xs(href='#') No node selected
+                  a#select-status-undirected.btn.btn-info.btn-xs(href='#') Directed edge mode
+            .well
+              h5 Strategy selection
+              ul#select-strategy-avail.breadcrumb
+                h5 Available:
+                br
+                h5 Not available:
+                br
+      // end of left column
+      // right column, top
+      .row
+        // activity console
+        .col-md-6(style='min-height: 320px')
+          h5 Console
+          ul.breadcrumb
+            p#console-5.text-console >
+            p#console-4.text-console >
+            p#console-3.text-console >
+            p#console-2.text-console >
+            p#console-1.text-console >
+            p.text-primary
+              b#console-0
+        // game control
+        .col-md-6
+          h5 Game control (iterate best reponse)
+          ul.breadcrumb
+            .btn-group.btn-group-justified
+              a.btn.btn-primary(href='#s', onclick='cycle.best_response();') Selected node
+              a.btn.btn-warning(href='#s', onclick='cycle.iter_node();') Iterate node by node
+          ul.breadcrumb
+            .btn-group.btn-group-justified
+              a.btn.btn-danger(href='#s', onclick='cycle.iter_coalition();') Coalition
+              a.btn.btn-info(href='#s', onclick='cycle.iter_cycle();') Whole cycle
+              a.btn.btn-success(href='#s', onclick='cycle.iter_nash();') Find Nash equilibrium
+      // end of right column
+      // playground
+      .row
+        .col-md-12
+          .panel.panel-default
+            .panel-heading Interactive graph playground
+            #pg.panel-body(style='text-align:center;')
+            #pg-foot.panel-footer
+      // end of playground
+    // end of container
+  script(src='/app/io.js')
+  script(src='/app/game.js')
+  script(src='/app/cycle.js')
+  script(src='/app/table.js')
+  script(src='/app/app.js')
