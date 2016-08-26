@@ -62,10 +62,13 @@ html
             // display settings
             li
               a(href='#', data-toggle='modal', data-target='#displayModal') Display settings
+            li
+              a(href='#', data-toggle='modal', data-target='#generateModal') Generate graph
           ul.nav.navbar-nav.navbar-right
             li
               a(href='#', data-toggle='modal', data-target='#helpModal') Help
           ul.nav.navbar-nav.navbar-right
+
 
     #helpModal.modal.fade(role='dialog')
       .modal-dialog
@@ -97,6 +100,39 @@ html
                   td Unfix node
           .modal-footer
             button.btn.btn-primary(type='button', data-dismiss='modal') Close
+        
+    // Generate random graph modal
+    #generateModal.modal.fade(role='dialog')
+      .modal-dialog
+        // Modal content
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Generate graph
+          .modal-body
+            form.form-horizontal
+              fieldset
+                legend Generate a random graph and game
+                .form-group
+                  label.col-lg-4.control-label(for='modal-nodes') Number of nodes
+                  .col-lg-8
+                    input#modal-nodes.form-control(type='text', placeholder='10')
+                .form-group
+                  label.col-lg-4.control-label(for='modal-prob') Probability of edge
+                  .col-lg-8
+                    input#modal-prob.form-control(type='text', placeholder='0.5')
+                .form-group
+                  label.col-lg-4.control-label(for='modal-strat') Strategies
+                  .col-lg-8
+                    input#modal-strat.form-control(type='text', placeholder='3')
+                .form-group
+                  .col-lg-10.col-lg-offset-2
+                    button.btn.btn-default(type='reset', data-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='submit', data-dismiss='modal', onclick='generate.generate()') Submit
+
+
+
+    
     // display settings modal
     #displayModal.modal.fade(role='dialog')
       .modal-dialog
@@ -108,6 +144,7 @@ html
           .modal-body
             form#display-modal-form.form-horizontal(method='post')
               fieldset
+                legend Change display settings
                 .form-group
                   label.col-lg-4.control-label(for='select') Playground width
                   .col-lg-5
@@ -267,4 +304,5 @@ html
   script(src='/app/game.js')
   script(src='/app/cycle.js')
   script(src='/app/table.js')
+  script(src='/app/generate.js')
   script(src='/app/app.js')
