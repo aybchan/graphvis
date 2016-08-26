@@ -3,3 +3,6 @@ node_modules/*
 
 # Node log
 npm-debug.log
+
+# OS X DS_Store
+.DS_Store
