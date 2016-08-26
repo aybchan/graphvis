@@ -1,0 +1,5 @@
+# Node package binaries
+node_modules/*
+
+# Node log
+npm-debug.log
