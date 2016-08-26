@@ -86,20 +86,19 @@ function strategyless() {
   var non_null_strategy_nodes = [];
   for (i = 0; i < strategy_chosen.length; i++)
     non_null_strategy_nodes.push(strategy_chosen[i].id);
-    console.log( non_null_strategy_nodes );
   for (i = 0; i < nodes.length; i++) {
     if(!in_array(i, non_null_strategy_nodes))
       strategy_chosen.push( {id:i, strategy:null} );
   }
 
   if(strategies.length != strategies_available.length) {
-    var strategiesWithNodes = [];
+    var strategies_w_nodes = [];
 
     for (i = 0; i < strategies_available.length; i++)
-      strategiesWithNodes.push(strategies_available[i].id);
+      strategies_w_nodes.push(strategies_available[i].id);
 
     for (i = 0; i < strategies.length; i++)
-      if(!in_array(strategies[i].id, strategiesWithNodes))
+      if(!in_array(strategies[i].id, strategies_w_nodes))
         strategies_available.push({id: i, nodes: []});
   }
 }
@@ -450,6 +449,18 @@ function keydown() {
 function in_array(obj, arr) {
   return arr.indexOf(obj) > -1;
 }
+
+function node_object (id) {
+  var i;
+  for( i = 0; i < nodes.length; i++) {
+    if (nodes[i].id == id)
+      return nodes[i];
+  }
+  console.log( msg = '(' + message++ + ') \tNode not found!' );
+  update_console(msg);
+  window.alert("node not on graph!");
+}
+
 
 function keyup() {
   lastKeyDown = -1;
