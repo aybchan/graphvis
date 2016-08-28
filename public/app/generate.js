@@ -24,6 +24,10 @@ var generate = (function() {
   }
 
   function gen_strategies(l, s) {
+    var new_strategies = s - strategies.length;
+    if(new_strategies)
+      add_strategy(new_strategies);
+
     var strat = power_set(s);
     var pow_len = strat.length;
     var chosen_set = [];
@@ -49,6 +53,15 @@ var generate = (function() {
     }
   }
 
+  function add_strategy(ns) {
+    l = strategies.length;
+    for(var i = 0; i < ns; i++) {
+      strategies.push({id: l + i, color: colour_definitions[l + i].input});
+      strategies_available.push({id: l + i, nodes: new Array()});
+    }
+    return;
+  }
+
   function power_set(s) {
 
     var strategies = [];
@@ -70,13 +83,11 @@ var generate = (function() {
     var dir = false;
     for (var i = l; i < nodes.length; i++) {
       for (var m = j; m < nodes.length; m++) {
-        console.log('i:' + i + 'm:' + m);
         if (Math.random() < p) {
           if (Math.random() > 0.5)
-            dir = !dir; 
+            dir = !dir;
           var link = {source: node_object(i), target: node_object(m), left: dir, right: !dir};
           links.push(link);
-          console.log('link!');
         }
       }
       j++;
