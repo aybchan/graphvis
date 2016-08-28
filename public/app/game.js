@@ -38,7 +38,7 @@ var game = (function() {
       if(strategy_chosen[i].id == node && strategy_chosen[i].strategy == null)
         strategy_chosen[i].strategy = new_strategy;
     restart();
-    console.log( msg = '(' + message++ + '):\t' + strategy_name(new_strategy) + ' added to avaliable strategies for node ' + node + '!' );
+    msg = '(' + message++ + '):\t' + strategy_name(new_strategy) + ' added to avaliable strategies for node ' + node + '!';
     update_console(msg);
   }
 
@@ -50,7 +50,7 @@ var game = (function() {
       if(strategies_available[i].id == strategyId)  {
         strategies_available[i].nodes.splice(strategies_available[i].nodes.indexOf(nodeId), strategies_available[i].nodes.indexOf(nodeId)+1);
         restart();
-        console.log( msg = '(' + message++ + '): \t' + strategy_name(strategyId) + ' removed from avaliable strategies for node ' + nodeId + '!' );
+        msg = '(' + message++ + '): \t' + strategy_name(strategyId) + ' removed from avaliable strategies for node ' + nodeId + '!';
         update_console(msg);
         return;
       }
@@ -65,7 +65,7 @@ var game = (function() {
     for (i = 0; i < strategy_chosen.length; i++) {
       if (strategy_chosen[i].id == node) {
         strategy_chosen[i].strategy = new_strategy;
-        console.log( msg = '(' + message++ + '): \tStrategy of node ' + node + ' changed from ' + old_strategy + ' to ' + strategy_name(new_strategy) + '!' );
+        msg = '(' + message++ + '): \tStrategy of node ' + node + ' changed from ' + old_strategy + ' to ' + strategy_name(new_strategy) + '!';
         update_console(msg);
         restart();
         return;
@@ -105,14 +105,14 @@ var game = (function() {
     initiate_playground();
     strategyless();
     restart();
-    console.log( msg = '(' + message++ + '):\tPlayground emptied!');
+    msg = '(' + message++ + '):\tPlayground emptied!';
     update_console(msg);
   }
 
   function clear_coalition() {
     coalition_nodes = [];
     cycleCount = 0;
-    console.log( msg = '(' + message++ + '):\tCoalition emptied!');
+    msg = '(' + message++ + '):\tCoalition emptied!';
     update_console(msg);
     restart();
   }

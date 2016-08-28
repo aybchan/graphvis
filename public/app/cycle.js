@@ -14,17 +14,17 @@ var cycle = (function() {
 
 
     if (incoming_nodes.length < 1) {
-      console.log( msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' has no incoming nodes. Strategy unchanged.' );
+      msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' has no incoming nodes. Strategy unchanged.';
       update_console(msg);
       return;
     }
-    console.log( msg = '(' + message++ + '):\tNodes ' + incoming_nodes + ' are incoming to node ' + selected_node.id );
+    msg = '(' + message++ + '):\tNodes ' + incoming_nodes + ' are incoming to node ' + selected_node.id;
     update_console(msg);
-    console.log( msg = '(' + message++ + '):\t' + 'In-neighbour strategy choices of node ' + selected_node.id + ' (in order): ' + sorted  );
+    msg = '(' + message++ + '):\t' + 'In-neighbour strategy choices of node ' + selected_node.id + ' (in order): ' + sorted ;
     update_console(msg);
-    console.log(sorted);
+
     if(game.strategy_name_by_node(selected_node.id) == sorted[0]) {
-      console.log( msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' has already chosen ' + sorted[0] + '. Strategy unchanged.' );
+      msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' has already chosen ' + sorted[0] + '. Strategy unchanged.';
       update_console(msg);
       return;
     }
@@ -37,19 +37,19 @@ var cycle = (function() {
     for (var i in sorted) {
       if (in_array(selected_node.id, game.nodes_with_strategy(sorted[i]))) {
         if (sorted[i] != game.strategy_name_by_node(selected_node.id)) {
-          console.log( msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' can improve its payoff by switching to ' + sorted[i] + '!' );
+          msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' can improve its payoff by switching to ' + sorted[i] + '!';
           update_console(msg);
           game.change_strategy(selected_node.id, game.strategy_id(sorted[i]));
           return;
         }
         else {
-          console.log( msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' cannot improve. Strategy unchanged.' );
+          msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' cannot improve. Strategy unchanged.';
           update_console(msg);
           return;
         }
       }
     }
-    console.log( msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' cannot improve its strategy because ' + sorted[0] + ' is not available. Strategy unchanged.' );
+    msg = '(' + message++ + '):\t' + 'Node ' + selected_node.id + ' cannot improve its strategy because ' + sorted[0] + ' is not available. Strategy unchanged.';
     update_console(msg);
     return;
   }
@@ -62,11 +62,8 @@ var cycle = (function() {
         stratArray.push(game.strategy_name_by_node(nodesArray[i]));
       }
 
-      console.log('stratArray: ' + stratArray);
       var frequency = {};
-
       stratArray.forEach(function(value) { frequency[value] = 0; });
-
       var uniques = stratArray.filter(function(value) {
           return ++frequency[value] == 1;
       });
@@ -81,7 +78,7 @@ var cycle = (function() {
     if(selected_node) {
       var count = cycleCount % coalition_nodes.length;
       selected_node = coalition_nodes[count];
-      console.log( msg = '(' + message++ + '):\tNode ' + selected_node.id + ' selected!' );
+      msg = '(' + message++ + '):\tNode ' + selected_node.id + ' selected!' ;
       update_console(msg);
       best_response();
       cycleCount++;
@@ -102,7 +99,7 @@ var cycle = (function() {
     if(!selected_node)
       selected_node = nodes[0]
 
-    console.log( msg = '(' + message++ + '):\tNode ' + selected_node.id + ' selected!' );
+    msg = '(' + message++ + '):\tNode ' + selected_node.id + ' selected!';
     update_console(msg);
     best_response();
     selected_node = nodes[selected_node.id + 1 % nodes.length];
@@ -121,10 +118,10 @@ var cycle = (function() {
 
     var check = same_strategy(strat_before);
     if(check) {
-      console.log( msg = '(' + message++ + '):\t' + 'No change in strategy choices after ' + nodes.length + ' iterations');
+      msg = '(' + message++ + '):\t' + 'No change in strategy choices after ' + nodes.length + ' iterations';
       update_console(msg);
     } else {
-      console.log( msg = '(' + message++ + '):\t' + 'Strategy change after ' + nodes.length + ' iterations: Nash equilibrium not found!' );
+      msg = '(' + message++ + '):\t' + 'Strategy change after ' + nodes.length + ' iterations: Nash equilibrium not found!';
       update_console(msg);
     }
   }
@@ -150,15 +147,12 @@ var cycle = (function() {
         if(j > (5 * nodes.length))
           break;
       }
-
-      console.log(no_change_count);
-      console.log(j);
     }
 
     if(no_change_count == nodes.length)
-      console.log( msg = '(' + message++ + '):\t' + ' Nash equilibrium found after ' + j + ' iterations!' );
+      msg = '(' + message++ + '):\t' + ' Nash equilibrium found after ' + j + ' iterations!';
     else
-      console.log( msg = '(' + message++ + '):\t' + ' No Nash equilibrium after ' + j + ' iterations!' );
+      msg = '(' + message++ + '):\t' + ' No Nash equilibrium after ' + j + ' iterations!';
 
     update_console(msg);
   }

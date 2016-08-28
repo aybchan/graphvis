@@ -3,15 +3,14 @@ var io = (function() {
   // file handling
   function upload_graph() {
     graphFile = "data/uploads/graph.json";
-    console.log("helllo");
-    console.log( msg = '(' + message++ + ')\tNew graph uploaded!');
+    msg = '(' + message++ + ')\tNew graph uploaded!';
     update_console(msg);
     reload();
   }
 
   function upload_game() {
     gameFile = "data/uploads/game.json";
-    console.log( msg = '(' + message++ + ')\tNew game uploaded!');
+    msg = '(' + message++ + ')\tNew game uploaded!';
     update_console(msg);
     reload();
   }
@@ -62,21 +61,6 @@ var io = (function() {
       log = log.concat(messages[i] + '\n');
     }
     window.open('data:text/txt;charset=utf-8,' + escape(log));
-  }
-
-  function downloadText() {
-    console.log( '(' + message++ + ') \tDownloaded as text!' );
-  }
-
-  // download as image
-  function downloadPNG() {
-    console.log( '(' + message++ + ') \tDownloaded as image!!' );
-  }
-
-  // upload
-  function upload() {
-    console.log("upload");
-    console.log( '(' + message++ + ') \tUpload!' );
   }
 
   return {

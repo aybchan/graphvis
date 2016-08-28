@@ -64,8 +64,7 @@ function read(error, graph, game, colours) {
   strategies_available = game.strategies_available;
   colour_definitions = colours.colours;
 
-  console.log( msg = '(' + message++ + ') \tFiles loaded.' );
-  console.log( strategy_chosen );
+  msg = '(' + message++ + ') \tFiles loaded.';
   update_console(msg);
 
   lastNodeId = nodes.length - 1;
@@ -308,7 +307,7 @@ function restart() {
 
   table.html();
 
-  //console.log( '(' + message++ + ') \tPlayground refreshed.' );
+  //'(' + message++ + ') \tPlayground refreshed.' );
 }
 
 function mousedown() {
@@ -328,7 +327,7 @@ function mousedown() {
   nodes.push(node);
   strategy_chosen.push( {id:lastNodeId, strategy:null} );
 
-  console.log( msg = '(' + message++ + '): \t Node ' + lastNodeId + ' added to graph!' );
+  msg = '(' + message++ + '): \t Node ' + lastNodeId + ' added to graph!';
   update_console(msg);
 
   restart();
@@ -349,7 +348,7 @@ function mouseup() {
       .classed('hidden', true)
       .style('marker-end', '');
     if(mouseup_node)  {
-      console.log( msg = '(' + message++ + '): \t Path from node ' + mousedown_node.id + ' to node ' + mouseup_node.id + ' added to graph!' );
+      msg = '(' + message++ + '): \t Path from node ' + mousedown_node.id + ' to node ' + mouseup_node.id + ' added to graph!';
       update_console(msg);
     }
   }
@@ -385,9 +384,9 @@ function keydown() {
     undirected = !undirected;
 
     if(undirected)
-      console.log( msg = '(' + message++ + '): \tUndirected edge mode turned on! Press \'u\' to turn off.');
+      msg = '(' + message++ + '): \tUndirected edge mode turned on! Press \'u\' to turn off.';
     else
-      console.log( msg = '(' + message++ + '): \tUndirected edge mode turned off! Press \'u\' to turn on.');
+      msg = '(' + message++ + '): \tUndirected edge mode turned off! Press \'u\' to turn on.';
     update_console(msg);
     table.html();
   }
@@ -412,11 +411,11 @@ function keydown() {
           }
         }
         spliceLinksForNode(selected_node);
-        console.log( msg = '(' + message++ + '): \tNode ' + selected_node.id + ' removed from graph!' );
+        msg = '(' + message++ + '): \tNode ' + selected_node.id + ' removed from graph!';
         update_console(msg);
       } else if(selected_link) {
         links.splice(links.indexOf(selected_link), 1);
-        console.log( msg = '(' + message++ + '): \tPath from node ' + selected_link.source.id + ' to node ' + selected_link.target.id + ' removed from graph!' );
+        msg = '(' + message++ + '): \tPath from node ' + selected_link.source.id + ' to node ' + selected_link.target.id + ' removed from graph!';
         update_console(msg);
       }
       selected_link = null;
@@ -429,14 +428,14 @@ function keydown() {
           for (i = 0; i < coalition_nodes.length; i++) {
             if (coalition_nodes[i] == selected_node) {
               coalition_nodes.splice(i, i + 1)
-              console.log( msg = '(' + message++ + '): \t Node ' + selected_node.id + ' removed from coalition!');
+              msg = '(' + message++ + '): \t Node ' + selected_node.id + ' removed from coalition!';
               update_console(msg);
               break;
             }
           }
         } else {
           coalition_nodes.push(selected_node);
-          console.log( msg = '(' + message++ + '): \t Node ' + selected_node.id + ' added to coalition!');
+          msg = '(' + message++ + '): \t Node ' + selected_node.id + ' added to coalition!';
           update_console(msg);
         }
       }
@@ -456,7 +455,7 @@ function node_object (id) {
     if (nodes[i].id == id)
       return nodes[i];
   }
-  console.log( msg = '(' + message++ + ') \tNode not found!' );
+  msg = '(' + message++ + ') \tNode not found!';
   update_console(msg);
   window.alert("node not on graph!");
 }
@@ -544,7 +543,7 @@ function convert_colour(col) {
       return d3.rgb(colour_definitions[i].out);
   }
 
-  console.log( msg = '(' + message++ + ') \t ' + col + ' not found!' );
+  msg = '(' + message++ + ') \t ' + col + ' not found!';
   update_console(msg);
 
   return d3.rgb(col);
@@ -601,7 +600,7 @@ function display_settings(w, h, c) {
   document.getElementById('modal-spread').setAttribute("placeholder", spread);
 
   document.getElementById('pg-foot').innerHTML = w + 'px x ' + h + 'px playground. Click settings to resize.)';
-  console.log( msg = '(' + message++ + '): \t Resized playground to ' + w + ' x ' + h + ' pixels, and node spread to ' + c + '.');
+  msg = '(' + message++ + '): \t Resized playground to ' + w + ' x ' + h + ' pixels, and node spread to ' + c + '.';
   update_console(msg);
 }
 
