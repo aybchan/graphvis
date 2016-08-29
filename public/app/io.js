@@ -41,7 +41,7 @@ var io = (function() {
     // add nodes
     for(var i in node_list) {
       var point = [0,0],
-          node = {id: i, reflexive: false};
+          node = {id: parseInt(i), reflexive: false};
       node.x = point[0];
       node.y = point[1];
       nodes.push(node);
