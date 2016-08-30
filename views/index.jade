@@ -44,9 +44,9 @@ html
                 span.caret
               ul.dropdown-menu(role='menu')
                 li
-                  a(href='#', onclick='io.download_graph();') Download graph as .json
+                  a(href='#', onclick='io.download_graph();') Download graph (.json)
                 li
-                  a(href='#', onclick='io.download_game()') Download game as .json
+                  a(href='#', onclick='io.download_game()') Download game (.json)
                 li
                   a(href='#', onclick='io.download_log()') Download console log
             // upload dropdown
@@ -56,9 +56,11 @@ html
                 span.caret
               ul.dropdown-menu(role='menu')
                 li
-                  a(href='#', data-toggle='modal', data-target='#upGraphModal') Upload directed graph as .json
+                  a(href='#', data-toggle='modal', data-target='#upDotModal') Upload graph (.dot)
                 li
-                  a(href='#', data-toggle='modal', data-target='#upGameModal') Upload game as .json
+                  a(href='#', data-toggle='modal', data-target='#upGraphModal') Upload graph (.json)
+                li
+                  a(href='#', data-toggle='modal', data-target='#upGameModal') Upload game (.json)
             // display settings
             li
               a(href='#', data-toggle='modal', data-target='#displayModal') Display settings
@@ -124,7 +126,7 @@ html
                 .form-group
                   label.col-lg-4.control-label(for='modal-strat') Strategies
                   .col-lg-8
-                    input#modal-strat.form-control(type='text', placeholder='3')
+                    input#modal-strat.form-control(type='text', placeholder='max = 8')
                 .form-group
                   .col-lg-10.col-lg-offset-2
                     button.btn.btn-default(type='reset', data-dismiss='modal') Cancel
@@ -160,6 +162,37 @@ html
                     button.btn.btn-default(type='reset', data-dismiss='modal') Cancel
                     button.btn.btn-primary(type='submit', data-dismiss='modal', onclick='set_display()') Submit
           .modal-footer
+          
+    // dot graph modal
+    #upDotModal.modal.fade(role='dialog')
+      .modal-dialog
+        // Modal content
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Upload graph (.dot file)
+          .modal-body
+
+            form#display-modal-form.form-horizontal(method='post')
+              fieldset
+                .form-group
+                  label.col-lg-2(for='dotText', class='control-label”>.dot file:</label> <div class=') .dot graph
+                  .col-lg-10
+                    textarea#modal-dot.form-control(rows='10')
+                    span.help-block Paste your .dot text file here to upload a graph
+                    a(href='#', onclick='io.example_dot()') See example
+                .form-group
+                  label.col-lg-6.control-label(for='dotStr') Number of strategies (optional)
+                  .col-lg-6
+                    input#dotStr.form-control(type='text', placeholder='max = 8')
+
+
+                .form-group
+                  .col-lg-10.col-lg-offset-2
+                    button.btn.btn-default(type='reset', data-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='submit', data-dismiss='modal', onclick='io.upload_dot()') Submit
+          .modal-footer          
+    
     // upload graph modal
     #upGraphModal.modal.fade(role='dialog')
       .modal-dialog
@@ -167,7 +200,7 @@ html
         .modal-content
           .modal-header
             button.close(type='button', data-dismiss='modal') ×
-            h4.modal-title Upload graph as .json
+            h4.modal-title Upload graph (.json)
           .modal-body
             form#uploadGraph(enctype='multipart/form-data', method='post', action='/graph', onsubmit='io.upload_graph();')
               input(type='file', name='graph')
@@ -175,6 +208,7 @@ html
               | Submit
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Close
+            
     // upload game modal
     #upGameModal.modal.fade(role='dialog')
       .modal-dialog
