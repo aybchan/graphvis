@@ -26,6 +26,7 @@ app.use("/javascripts", express.static(__dirname + '/public/javascripts'));
 app.use("/app", express.static(__dirname + '/public/app'));
 app.use("/data", express.static(__dirname + '/public/data'));
 app.use("/json", express.static(__dirname + '/public/json'));
+app.use("/fonts", express.static(__dirname + '/public/fonts'));
 
 app.use('/', routes);
 app.use('/users', users);

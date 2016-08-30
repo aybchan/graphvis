@@ -5,6 +5,7 @@ html
     title Games on graphs visualisation system
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/app.css')
+    link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
     script(src='/javascripts/jquery-2.2.3.min.js')
     script(src='/javascripts/bootstrap.min.js')
     script(src='/javascripts/d3-queue.v2.min.js')
@@ -26,11 +27,14 @@ html
           ul.nav.navbar-nav
             // reload
             li
-              a(href='#', onclick='game.clear_playground(); reload();') Reload
+              a(href='#', onclick='game.clear_playground(); reload();')
+                i.fa.fa-refresh(aria-hidden='true')
+                |   Reload
             // clear dropdown
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
-                | Clear
+                i.fa.fa-eraser(aria-hidden='true')
+                |   Clear
                 span.caret
               ul.dropdown-menu(role='menu')
                 li
@@ -40,7 +44,8 @@ html
             // download dropdown
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
-                | Download
+                i.fa.fa-download(aria-hidden='true')
+                |   Download
                 span.caret
               ul.dropdown-menu(role='menu')
                 li
@@ -52,7 +57,8 @@ html
             // upload dropdown
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
-                | Upload
+                i.fa.fa-upload(aria-hidden='true')
+                |   Upload
                 span.caret
               ul.dropdown-menu(role='menu')
                 li
@@ -63,12 +69,23 @@ html
                   a(href='#', data-toggle='modal', data-target='#upGameModal') Upload game (.json)
             // display settings
             li
-              a(href='#', data-toggle='modal', data-target='#displayModal') Display settings
+              a(href='#', data-toggle='modal', data-target='#displayModal')
+                i.fa.fa-gear(aria-hidden='true')
+                |   Display settings
             li
-              a(href='#', data-toggle='modal', data-target='#generateModal') Generate graph
+              a(href='#', data-toggle='modal', data-target='#generateModal')
+                i.fa.fa-magic(aria-hidden='true')
+                |   Generate graph
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='#', data-toggle='modal', data-target='#helpModal') Help
+              a(href='#', data-toggle='modal', data-target='#helpModal')
+               i.fa.fa-info.fa
+               |    Help
+            li
+              a(href='#', data-toggle='modal', data-target'https://github.com/aybchan/graphvis')
+                i.fa.fa-github-alt.fa
+                |   GitHub
+                
           ul.nav.navbar-nav.navbar-right
 
 
@@ -288,8 +305,9 @@ html
           .col-md-12
             .well.well-sm
               ul#select-strategy.breadcrumb
-                ul.select-status
+                li.select-status
                   a#select-status-node.btn.btn-warning.btn-xs(href='#') No node selected
+                li.select-status
                   a#select-status-undirected.btn.btn-info.btn-xs(href='#') Directed edge mode
             .well
               h5 Strategy selection

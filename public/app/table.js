@@ -11,6 +11,8 @@ var table = (function() {
     // node information (second col)
     document.getElementById('select-strategy-avail').innerHTML = strategy_list();
     if (selected_node) {
+      document.getElementById('select-status-node').innerHTML = 'Node ' + selected_node.id +' selected';
+      document.getElementById('select-status-node').className = 'btn btn-primary btn-xs';
       document.getElementById('sel-node').innerHTML = selected_node.id;
       if (game.strategy_id_by_node(selected_node.id) > -1) {
         document.getElementById('sel-strat').innerHTML = game.strategy_name_by_node(selected_node.id);
