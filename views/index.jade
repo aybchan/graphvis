@@ -126,7 +126,7 @@ html
                 .form-group
                   label.col-lg-4.control-label(for='modal-strat') Strategies
                   .col-lg-8
-                    input#modal-strat.form-control(type='text', placeholder='3')
+                    input#modal-strat.form-control(type='text', placeholder='max = 8')
                 .form-group
                   .col-lg-10.col-lg-offset-2
                     button.btn.btn-default(type='reset', data-dismiss='modal') Cancel
@@ -176,11 +176,16 @@ html
             form#display-modal-form.form-horizontal(method='post')
               fieldset
                 .form-group
-                  label.col-lg-2(for='“dotText”', class='control-label”>.dot file:</label> <div class=') .dot graph
+                  label.col-lg-2(for='dotText', class='control-label”>.dot file:</label> <div class=') .dot graph
                   .col-lg-10
                     textarea#modal-dot.form-control(rows='10')
                     span.help-block Paste your .dot text file here to upload a graph
                     a(href='#', onclick='io.example_dot()') See example
+                .form-group
+                  label.col-lg-6.control-label(for='dotStr') Number of strategies (optional)
+                  .col-lg-6
+                    input#dotStr.form-control(type='text', placeholder='max = 8')
+
 
                 .form-group
                   .col-lg-10.col-lg-offset-2

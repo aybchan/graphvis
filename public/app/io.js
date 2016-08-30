@@ -4,7 +4,6 @@ var io = (function() {
     game.clear_playground();
     var dot = document.getElementById('modal-dot').value;
     lines = dot.split(/\r?\n/)
-    console.log(lines);
 
     var node_list = new Array();
 
@@ -24,10 +23,13 @@ var io = (function() {
     }
     node_list.sort();
     add_dot_nodes(node_list);
-    console.log(lines);
     add_dot_edges(lines);
     lastNodeId = node_list[node_list.length-1];
     strategyless();
+
+    if(num_str = parseInt(document.getElementById('dotStr').value))
+      add_strategy(num_str);
+
     restart();
   }
 
@@ -36,6 +38,22 @@ var io = (function() {
     window.alert(example);
   }
 
+  function add_strategy(num_strategies) {
+    if(num_strategies > strategies.length)
+      generate.add_strategy(num_strategies);
+
+    var pw = generate.power_set(num_strategies);
+
+    for (var i = 0; i < strategy_chosen.length; i++) {
+      var choose = strategy = pw[Math.floor(Math.random()*pw.length)];
+      strategy_chosen[i].strategy = choose[Math.floor(Math.random()*choose.length)];
+
+      var node = strategy_chosen[i].id;
+      for (var j = 0; j < strategies_available.length; j++)
+        if(in_array(strategies_available[j].id, choose))
+          strategies_available[j].nodes.push(node);
+    }
+  }
 
   function add_dot_nodes(node_list) {
     // add nodes
@@ -123,7 +141,7 @@ var io = (function() {
   }
 
   return {
-    upload_dot,
+    upload_dot: upload_dot,
     upload_game: upload_game,
     upload_graph: upload_graph,
     example_dot: example_dot,

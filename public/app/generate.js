@@ -95,6 +95,8 @@ var generate = (function() {
   }
 
   return {
-    generate: generate
+    generate: generate,
+    add_strategy: add_strategy,
+    power_set: power_set
   };
 }());
